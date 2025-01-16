@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head th:replace="layout.html :: headprincipal">
+        <style>
+            /* Estilo opcional para centrar los botones fuera de la tabla */
+            .acciones-fuera {
+                margin-top: 20px;
+            }
+        </style>
+    </head>	
+	<body style="background-color: #141414; color: white; font-family: 'Arial', sans-serif;">
+		<div th:replace="layout.html :: cabecera"></div>
+		
+		<h1 class="display-3 text-danger">Lista de Clasificaciones</h1>
+
+		<!-- Formulario para agregar clasificaciones -->
+		<h2>Agregar Clasificación</h2>
+		<form class="form bg-dark p-4 rounded shadow"id="form-clasificacion" action="/guardar" method="post">
+		    <label for="clasificacion"class="form-label text-light mt-3">Nombre Clasificación:</label>
+		    <input class="form-control bg-secondary text-white border-0"type="text" id="id_clasificacion" name="name_clasificacion" required>
+		    <button class="btn btn-danger mt-3"type="submit" id="btn-agregar">Agregar</button>
+		</form>
+		<div class="acciones-fuera">
+			<h2>Editar Clasificación</h2>
+			<form class="form bg-dark p-4 rounded shadow" th:action="editar" method="post">
+			    <label class="form-label text-light mt-3" for="editar_id">ID de Clasificación a Editar:</label>
+			    <input class="form-control bg-secondary text-white border-0"type="text" id="editar_id" name="id" placeholder="ID" required>
+			    <br>
+			    <label class="form-label text-light mt-3" for="editar_nombre">Nuevo Nombre:</label>
+			    <input class="form-control bg-secondary text-white border-0"type="text" id="editar_nombre" name="name_clasificacion" placeholder="Nuevo Nombre" required>
+			    <button class="btn btn-danger mt-3"type="submit">Editar</button>
+			</form>
+
+			<h2>Borrar Clasificación</h2>
+			<form class="form bg-dark p-4 rounded shadow" action="/borrar" method="post">
+				<label class="form-label text-light mt-3" for="borrar_id">ID de Clasificación a Borrar:</label>
+				<input class="form-control bg-secondary text-white border-0"type="number" id="borrar_id" name="id" placeholder="ID" required>
+				<button class="btn btn-danger mt-3"type="submit" onclick="return confirm('¿Seguro que quieres borrar esta clasificación?')">Borrar</button>
+			</form>
+		</div>
+		
+		<br>
+				
+		<table border="1" class="table table-dark table-hover mt-3">
+		    <thead>
+		        <tr>
+	    	        <th>ID</th>
+	        	    <th>Clasificación</th>
+	            </tr>
+		    </thead>
+		    <tbody>
+				<tr th:each="clasificacion : ${listaclasificacion}" id="clasificacion-[[${clasificacion.id_clasificacion}]]">
+		            <td th:text="${clasificacion.id_clasificacion}"></td>
+		            <td th:text="${clasificacion.name_clasificacion}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
